@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Opening Telegram…</title>
+  <style>
+    body {
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      font-family: sans-serif;
+      background: #fafafa;
+      color: #08c;
+    }
+    h2 { margin: 0 0 12px; }
+    .loader {
+      width: 32px;
+      height: 32px;
+      border: 3px solid #ddd;
+      border-top: 3px solid #08c;
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+    }
+    @keyframes spin { 100% { transform: rotate(360deg); } }
+  </style>
+</head>
+<body>
+  <h2>Opening Telegram…</h2>
+  <div class="loader"></div>
+
+  <script>
+    const appLink = "tg://resolve?domain=monika7893";
+    const webLink = "https://t.me/monika7893";
+
+    // Fallback delay (Mobile: 100ms, Desktop: 200ms)
+    const delay = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent) ? 100 : 200;
+
+    let fallback = true;
+
+    // If app opened → page hidden → cancel fallback
+    document.addEventListener("visibilitychange", () => {
+      if (document.hidden) fallback = false;
+    });
+
+    // Try opening Telegram app
+    window.location.href = appLink;
+
+    // Fallback to web link after delay if app didn’t open
+    setTimeout(() => {
+      if (fallback) window.location.href = webLink;
+    }, delay);
+  </script>
+</body>
+</html>
